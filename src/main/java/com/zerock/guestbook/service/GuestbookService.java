@@ -1,7 +1,10 @@
 package com.zerock.guestbook.service;
 
 import com.zerock.guestbook.dto.GuestbookDTO;
+import com.zerock.guestbook.dto.PageRequestDTO;
+import com.zerock.guestbook.dto.PageResultDTO;
 import com.zerock.guestbook.entity.Guestbook;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 public interface GuestbookService {
 
@@ -15,5 +18,21 @@ public interface GuestbookService {
                 .writer(dto.getWriter())
                 .build();
         return entity;
+    }
+
+    PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
+
+    default GuestbookDTO entityToDto(Guestbook entity){
+
+        GuestbookDTO dto = GuestbookDTO.builder()
+                .gno(entity.getGno())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .writer(entity.getWriter())
+                .regDate(entity.getRegDate())
+                .modDate(entity.getModDate())
+                .build();
+
+        return dto;
     }
 }
