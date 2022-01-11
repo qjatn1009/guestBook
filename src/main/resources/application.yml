@@ -9,7 +9,8 @@ spring :
     password : root
 
   jpa :
-    hibernate : create
+    hibernate :
+      ddl-auto : update
     properties :
       hibernate :
         format_sql : true
