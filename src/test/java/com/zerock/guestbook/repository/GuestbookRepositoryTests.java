@@ -1,12 +1,18 @@
 package com.zerock.guestbook.repository;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.zerock.guestbook.entity.Guestbook;
+import com.zerock.guestbook.entity.QGuestbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -57,4 +63,53 @@ public class GuestbookRepositoryTests {
 
         }
     }
+
+    // 제목에 "1"을 포함하는 방명록을 10개 가져와서 gno로 내림차순
+    @Test
+    public void testQuery1() {
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("gno").descending());
+
+        QGuestbook qGuestbook = QGuestbook.guestbook;
+
+        String keyword = "1";
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        BooleanExpression expression = qGuestbook.title.contains(keyword);
+
+        builder.and(expression);
+
+        Page<Guestbook> result = guestbookRepository.findAll(builder, pageable);
+
+        result.stream().forEach(guestbook -> {
+            System.out.println(guestbook);
+        });
+    }
+
+    @Test
+    public void testQuery2(){
+
+        PageRequest pageable = PageRequest.of(0, 10, Sort.by("gno").descending());
+
+        QGuestbook qGuestbook = QGuestbook.guestbook;
+
+        String keyword = "1";
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        BooleanExpression exTitle = qGuestbook.title.contains(keyword);
+        BooleanExpression exContent = qGuestbook.content.contains(keyword);
+        BooleanExpression exAll = exTitle.or(exContent);
+
+        builder.and(exAll);
+        builder.and(qGuestbook.gno.gt(0L));
+
+        Page<Guestbook> result = guestbookRepository.findAll(builder, pageable);
+
+        result.stream().forEach(guestbook -> {
+            System.out.println(guestbook);
+        });
+    }
+
 }
