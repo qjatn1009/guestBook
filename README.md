@@ -11,5 +11,6 @@
     - Spring Web
     - Spring Boot DevTools
     - MariaDB Driver
+    - QueryDsl
 - IDE
     - IntelliJ Community
