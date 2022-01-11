@@ -1,6 +1,7 @@
 package com.zerock.guestbook.dto;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Data
+@Slf4j
 public class PageResultDTO<DTO, EN> {
 
     private List<DTO> dtoList;
@@ -40,7 +42,7 @@ public class PageResultDTO<DTO, EN> {
         this.page = pageable.getPageNumber() + 1;
         this.size = pageable.getPageSize();
 
-        int tempEnd = (int)(Math.ceil(page / 10)) * 10;
+        int tempEnd = (int)(Math.ceil(page / 10.0)) * 10;
 
         this.start = tempEnd - 9;
 
