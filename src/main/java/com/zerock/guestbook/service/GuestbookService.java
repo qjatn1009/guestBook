@@ -4,7 +4,6 @@ import com.zerock.guestbook.dto.GuestbookDTO;
 import com.zerock.guestbook.dto.PageRequestDTO;
 import com.zerock.guestbook.dto.PageResultDTO;
 import com.zerock.guestbook.entity.Guestbook;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 public interface GuestbookService {
 
@@ -35,4 +34,6 @@ public interface GuestbookService {
 
         return dto;
     }
+
+    GuestbookDTO read(Long gno);
 }
