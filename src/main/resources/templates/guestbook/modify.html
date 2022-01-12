@@ -41,7 +41,7 @@
     </form>
 
     <button type="button" class="btn btn-primary modifyBtn">Modify</button>
-    <button type="button" class="btn btn-info">List</button>
+    <button type="button" class="btn btn-info listBtn">List</button>
     <button type="button" class="btn btn-danger removeBtn">Remove</button>
 
     <script th:inline="javascript">
@@ -68,6 +68,22 @@
 
         actionForm.submit();
       });
+
+      $(".listBtn").click(function(){
+
+        var pageInfo = $("input[name='page']");
+
+        actionForm.empty();
+        actionForm.append(pageInfo);
+
+        actionForm
+          .attr("action", "/guestbook/list")
+          .attr("method", "get");
+
+        console.log(actionForm.html());
+        actionForm.submit();
+      });
+
     </script>
   </th:block>
 </th:block>
