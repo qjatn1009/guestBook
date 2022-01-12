@@ -56,5 +56,26 @@ public class GuestbookServiceImpl implements GuestbookService{
         return result.isPresent() ? entityToDto(result.get()) : null;
     }
 
+    @Override
+    public void remove(Long gno) {
+
+        guestbookRepository.deleteById(gno);
+    }
+
+    @Override
+    public void modify(GuestbookDTO dto) {
+
+        Optional<Guestbook> result = guestbookRepository.findById(dto.getGno());
+
+        if(result.isPresent()){
+
+            Guestbook entity = result.get();
+
+            entity.changeTitle(dto.getTitle());
+            entity.changeContent(dto.getContent());
+
+            guestbookRepository.save(entity);
+        }
+    }
 
 }
