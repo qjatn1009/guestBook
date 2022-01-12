@@ -2,6 +2,7 @@ package com.zerock.guestbook.controller;
 
 import com.zerock.guestbook.dto.GuestbookDTO;
 import com.zerock.guestbook.dto.PageRequestDTO;
+import com.zerock.guestbook.entity.Guestbook;
 import com.zerock.guestbook.service.GuestbookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +75,21 @@ public class GuestbookController {
         redirectAttributes.addFlashAttribute("msg", gno);
 
         return "redirect:/guestbook/list";
+    }
+
+    @PostMapping("/modify")
+    public String modify(GuestbookDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+                         RedirectAttributes redirectAttributes) {
+
+        log.info("{}", "post modify................");
+        log.info("{}", "dto : " + dto);
+
+        guestbookService.modify(dto);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("gno", dto.getGno());
+
+        return "redirect:/guestbook/read";
     }
 
 }
