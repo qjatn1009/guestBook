@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 @Slf4j
 @Controller
 @RequestMapping("/guestbook")
@@ -44,7 +46,7 @@ public class GuestbookController {
     }
 
     @PostMapping("/register")
-    public String registerPost(GuestbookDTO dto, RedirectAttributes redirectAttributes){
+    public String registerPost(@Valid GuestbookDTO dto, RedirectAttributes redirectAttributes){
 
         log.info("{}", "dto... " + dto);
 
@@ -78,7 +80,7 @@ public class GuestbookController {
     }
 
     @PostMapping("/modify")
-    public String modify(GuestbookDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+    public String modify(@Valid GuestbookDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
                          RedirectAttributes redirectAttributes) {
 
         log.info("{}", "post modify................");
