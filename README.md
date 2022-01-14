@@ -12,5 +12,7 @@
     - Spring Boot DevTools
     - MariaDB Driver
     - QueryDsl
+    - javax.validation:validation-api
+	- org.hibernate:hibernate-validator:6.1.0.Final
 - IDE
     - IntelliJ Community
